@@ -91,14 +91,14 @@ _per_directory_history_directory="$HISTORY_BASE${PWD:A}/history"
 
 function _per-directory-history-change-directory() {
   _per_directory_history_directory="$HISTORY_BASE${PWD:A}/history"
-  mkdir -p ${_per_directory_history_directory:h}
+  mkdir -p "${_per_directory_history_directory:h}"
   if [[ $_per_directory_history_is_global == false ]]; then
     #save to the global history
-    fc -AI $HISTFILE
+    fc -AI "$HISTFILE"
     #save history to previous file
     local prev="$HISTORY_BASE${OLDPWD:A}/history"
-    mkdir -p ${prev:h}
-    fc -AI $prev
+    mkdir -p "${prev:h}"
+    fc -AI "$prev"
 
     #discard previous directory's history
     local original_histsize=$HISTSIZE
@@ -106,8 +106,8 @@ function _per-directory-history-change-directory() {
     HISTSIZE=$original_histsize
 
     #read history in new file
-    if [[ -e $_per_directory_history_directory ]]; then
-      fc -R $_per_directory_history_directory
+    if [[ -e "$_per_directory_history_directory" ]]; then
+      fc -R "$_per_directory_history_directory"
     fi
   fi
 }
@@ -123,9 +123,9 @@ function _per-directory-history-addhistory() {
          [[ -o inc_append_history ]] || \
          [[ -o inc_append_history_time ]]; then
           fc -AI $HISTFILE
-          fc -AI $_per_directory_history_directory
+          fc -AI "$_per_directory_history_directory"
       fi
-      fc -p $_per_directory_history_directory
+      fc -p "$_per_directory_history_directory"
   fi
 }
 
@@ -154,7 +154,7 @@ function _per-directory-history-set-directory-history() {
 }
 
 function _per-directory-history-set-global-history() {
-  fc -AI $_per_directory_history_directory
+  fc -AI "$_per_directory_history_directory"
   local original_histsize=$HISTSIZE
   HISTSIZE=0
   HISTSIZE=$original_histsize
@@ -163,7 +163,7 @@ function _per-directory-history-set-global-history() {
   fi
 }
 
-mkdir -p ${_per_directory_history_directory:h}
+mkdir -p "${_per_directory_history_directory:h}"
 
 #add functions to the exec list for chpwd and zshaddhistory
 autoload -U add-zsh-hook
