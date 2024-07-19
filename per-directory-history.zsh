@@ -80,8 +80,8 @@ function per-directory-history-toggle-history() {
 
 autoload per-directory-history-toggle-history
 zle -N per-directory-history-toggle-history
-bindkey $PER_DIRECTORY_HISTORY_TOGGLE per-directory-history-toggle-history
-bindkey -M vicmd $PER_DIRECTORY_HISTORY_TOGGLE per-directory-history-toggle-history
+bindkey "$PER_DIRECTORY_HISTORY_TOGGLE" per-directory-history-toggle-history
+bindkey -M vicmd "$PER_DIRECTORY_HISTORY_TOGGLE" per-directory-history-toggle-history
 
 #-------------------------------------------------------------------------------
 # implementation details
@@ -122,7 +122,7 @@ function _per-directory-history-addhistory() {
       if [[ -o share_history ]] || \
          [[ -o inc_append_history ]] || \
          [[ -o inc_append_history_time ]]; then
-          fc -AI $HISTFILE
+          fc -AI "$HISTFILE"
           fc -AI "$_per_directory_history_directory"
       fi
       fc -p "$_per_directory_history_directory"
@@ -144,7 +144,7 @@ function _per-directory-history-precmd() {
 }
 
 function _per-directory-history-set-directory-history() {
-  fc -AI $HISTFILE
+  fc -AI "$HISTFILE"
   local original_histsize=$HISTSIZE
   HISTSIZE=0
   HISTSIZE=$original_histsize
